@@ -7,59 +7,117 @@
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <style>
     body {
-      background-color: #f1f1f1;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #f0f0f0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-    .section-card {
-      margin-bottom: 24px;
+
+    .container {
+      max-width: 850px;
+      margin: auto;
+      padding: 32px 16px;
     }
-    .flag-img {
-      border: 1px solid #ccc;
-      padding: 4px;
+
+    .header {
+      background: linear-gradient(to right, #833ab4, #fd1d1d, #fcb045);
+      padding: 40px 20px;
+      border-radius: 16px;
+      text-align: center;
+      color: white;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .header h1 {
+      font-size: 48px;
+      margin-bottom: 10px;
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.07);
+      border-radius: 16px;
+      padding: 24px;
+      margin-top: 24px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: transform 0.2s ease;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .glass-card h2 {
+      color: #00ffff;
+      margin-bottom: 12px;
+    }
+
+    a.w3-button {
+      background-color: #ff4081 !important;
       border-radius: 8px;
-      background: white;
+    }
+
+    .flag-img {
+      border: 2px solid #eee;
+      border-radius: 12px;
+      padding: 4px;
+      background-color: #fff;
+      width: 120px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 48px;
+      font-size: 0.9em;
+      color: #bbb;
     }
   </style>
 </head>
-<body class="w3-content" style="max-width:800px; padding: 24px;">
+<body>
 
-  <div class="w3-container w3-teal w3-center w3-padding-32 w3-round-large">
-    <h1 class="w3-xxlarge">🛰️ ISS Tracker</h1>
-    <p class="w3-large">Real-time data about the International Space Station 🌍</p>
+  <div class="container">
+    <div class="header">
+      <h1>🛰️ ISS Tracker</h1>
+      <p>Live Space Station Data — Earth, Weather, and More 🌍</p>
+    </div>
+
+    <!-- ISS Location -->
+    <div class="glass-card">
+      <h2>📍 ISS Location</h2>
+      <p><strong>Latitude:</strong> {{ lat }}</p>
+      <p><strong>Longitude:</strong> {{ lon }}</p>
+      <p><a href="http://maps.google.com/maps?q={{ lat }},{{ lon }}" target="_blank" class="w3-button w3-small">View on Google Maps</a></p>
+    </div>
+
+    <!-- Weather Information -->
+    <div class="glass-card">
+      <h2>🌦 Weather at ISS Location</h2>
+      <p><strong>Temperature:</strong> {{ temp }} °C</p>
+      <p><strong>Condition:</strong> {{ desc }}</p>
+    </div>
+
+    <!-- Country Information -->
+    <div class="glass-card">
+      <h2>🌍 Country Info Below the ISS</h2>
+      <p>{{ message }}</p>
+      {% if flag %}
+        <img src="{{ flag }}" alt="Country Flag" class="flag-img">
+      {% endif %}
+    </div>
+
+    <!-- Distance Information -->
+    <div class="glass-card">
+      <h2>📏 Distance from You</h2>
+      <p>The ISS is approximately <strong>{{ iss_distance|round(2) }} km</strong> away from your location.</p>
+    </div>
+
+    <footer>
+      <p>✨ Powered by Flask, OpenNotify & Weather APIs. Designed with ❤️</p>
+    </footer>
   </div>
-
-  <!-- ISS Location -->
-  <div class="w3-card w3-white w3-padding section-card">
-    <h2 class="w3-text-teal">📍 ISS Location</h2>
-    <p><strong>Latitude:</strong> {{ lat }}</p>
-    <p><strong>Longitude:</strong> {{ lon }}</p>
-    <p><a href="http://maps.google.com/maps?q={{ lat }},{{ lon }}" target="_blank" class="w3-button w3-teal w3-small">View on Google Maps</a></p>
-  </div>
-
-  <!-- Weather Information -->
-  <div class="w3-card w3-white w3-padding section-card">
-    <h2 class="w3-text-teal">🌦 Weather at ISS Location</h2>
-    <p><strong>Temperature:</strong> {{ temp }} °C</p>
-    <p><strong>Condition:</strong> {{ desc }}</p>
-  </div>
-
-  <!-- Country Information -->
-  <div class="w3-card w3-white w3-padding section-card">
-    <h2 class="w3-text-teal">🌍 Country Info Below the ISS</h2>
-    <p>{{ message }}</p>
-    {% if flag %}
-      <img src="{{ flag }}" alt="Country Flag" class="flag-img" width="120">
-    {% endif %}
-  </div>
-
-  <!-- Distance Information -->
-  <div class="w3-card w3-white w3-padding section-card">
-    <h2 class="w3-text-teal">📏 Distance from You</h2>
-    <p>The ISS is approximately <strong>{{ iss_distance|round(2) }} km</strong> away from your location.</p>
-  </div>
-
-  <footer class="w3-center w3-text-gray w3-small" style="margin-top: 32px;">
-    <p>Made with 💫 using Flask, OpenNotify, and Weather APIs</p>
-  </footer>
 
 </body>
 </html>
